@@ -42,26 +42,32 @@ public class Jeu {
 
         while (true) {
         	System.out.println("\n" + joueurCourant.getNom() + ", à vous de jouer ! \nEntrez les coordonnées de votre tir (ex: A1) :");
-            int colonne;
-            int ligne;
-            do {
-                String coord = scanner.nextLine().toUpperCase();
-                colonne = coord.charAt(0) - 'A';
-                ligne = Integer.parseInt(coord.substring(1)) - 1;
-                if (colonne < 0 || colonne >= 10 || ligne < 0 || ligne >= 10) {
-                    System.out.println("Coordonnées invalides. Entrez à nouveau.");
-                }
-            } while (colonne < 0 || colonne >= 10 || ligne < 0 || ligne >= 10);
+        	int colonne;
+        	int ligne;
+        	while (true) {
+        	    String coord = scanner.nextLine().toUpperCase();
+        	    try {
+        	        colonne = coord.charAt(0) - 'A';
+        	        ligne = Integer.parseInt(coord.substring(1)) - 1;
+        	        if (colonne < 0 || colonne >= 10 || ligne < 0 || ligne >= 10) {
+        	            System.out.println("Coordonnées invalides. Entrez à nouveau.");
+        	        } else {
+        	            break;
+        	        }
+        	    } catch (Exception e) {
+        	        System.out.println("Coordonnées invalides. Entrez à nouveau.");
+        	    }
+        	}
 
-            if (autreJoueur.estTouche(ligne, colonne)) {
-                System.out.println("Touché !");
-                if (autreJoueur.getBateaux().isEmpty()) {
-                    System.out.println("Félicitations, " + joueurCourant.getNom() + " a gagné !");
-                    break;
-                }
-            } else {
-                System.out.println("Raté !");
-            }
+        	if (autreJoueur.estTouche(ligne, colonne)) {
+        	    System.out.println("Touché !");
+        	    if (autreJoueur.getBateaux().isEmpty()) {
+        	        System.out.println("Félicitations, " + joueurCourant.getNom() + " a gagné !");
+        	        break;
+        	    }
+        	} else {
+        	    System.out.println("Raté !");
+        	}
             
          // Afficher les grilles de jeu
             System.out.println("\nGrille de " + joueur1.getNom() + " :");
