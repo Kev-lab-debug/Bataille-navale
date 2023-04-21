@@ -1,6 +1,8 @@
 package bataille;
 
 import java.util.Scanner;
+import bataille.Bateau;
+import bataille.Joueur;
 
 public class Jeu {
 
