@@ -1,8 +1,6 @@
 package bataille;
 
 import java.util.Scanner;
-import bataille.Bateau;
-import bataille.Joueur;
 
 public class Jeu {
 
@@ -42,32 +40,26 @@ public class Jeu {
 
         while (true) {
         	System.out.println("\n" + joueurCourant.getNom() + ", à vous de jouer ! \nEntrez les coordonnées de votre tir (ex: A1) :");
-        	int colonne;
-        	int ligne;
-        	while (true) {
-        	    String coord = scanner.nextLine().toUpperCase();
-        	    try {
-        	        colonne = coord.charAt(0) - 'A';
-        	        ligne = Integer.parseInt(coord.substring(1)) - 1;
-        	        if (colonne < 0 || colonne >= 10 || ligne < 0 || ligne >= 10) {
-        	            System.out.println("Coordonnées invalides. Entrez à nouveau.");
-        	        } else {
-        	            break;
-        	        }
-        	    } catch (Exception e) {
-        	        System.out.println("Coordonnées invalides. Entrez à nouveau.");
-        	    }
-        	}
+            int colonne;
+            int ligne;
+            do {
+                String coord = scanner.nextLine().toUpperCase();
+                colonne = coord.charAt(0) - 'A';
+                ligne = Integer.parseInt(coord.substring(1)) - 1;
+                if (colonne < 0 || colonne >= 10 || ligne < 0 || ligne >= 10) {
+                    System.out.println("Coordonnées invalides. Entrez à nouveau.");
+                }
+            } while (colonne < 0 || colonne >= 10 || ligne < 0 || ligne >= 10);
 
-        	if (autreJoueur.estTouche(ligne, colonne)) {
-        	    System.out.println("Touché !");
-        	    if (autreJoueur.getBateaux().isEmpty()) {
-        	        System.out.println("Félicitations, " + joueurCourant.getNom() + " a gagné !");
-        	        break;
-        	    }
-        	} else {
-        	    System.out.println("Raté !");
-        	}
+            if (autreJoueur.estTouche(ligne, colonne)) {
+                System.out.println("Touché !");
+                if (autreJoueur.getBateaux().isEmpty()) {
+                    System.out.println("Félicitations, " + joueurCourant.getNom() + " a gagné !");
+                    break;
+                }
+            } else {
+                System.out.println("Raté !");
+            }
             
          // Afficher les grilles de jeu
             System.out.println("\nGrille de " + joueur1.getNom() + " :");
@@ -99,13 +91,20 @@ public class Jeu {
 
         scanner.close();
     }
-
+    
+    /**
+     * Affiche la grille de jeu à l'écran.
+     * @param grille la grille de jeu à afficher
+     */
     private static void afficherGrille(char[][] grille) {
         System.out.print("  ");
         for (int i = 0; i < grille.length; i++) {
             System.out.print((char)('A' + i) + " ");
         }
         System.out.println();
+        
+        // Affiche les chiffres pour identifier les lignes et les caractères de la grille
+
         for (int i = 0; i < grille.length; i++) {
             System.out.print(i+1 + " ");
             for (int j = 0; j < grille[i].length; j++) {
@@ -115,6 +114,14 @@ public class Jeu {
         }
     }
 
+    
+    /**
+     * Demande à l'utilisateur une coordonnée (ligne ou colonne) comprise entre 1 et max.
+     * Affiche un message d'erreur si la valeur saisie n'est pas un entier ou si elle n'est pas dans la plage autorisée.
+     * @param message le message à afficher pour demander la coordonnée
+     * @param max la valeur maximale autorisée pour la coordonnée
+     * @return la coordonnée saisie, soustraite de 1 pour obtenir l'indice correspondant en Java
+     */
     private static int demanderCoordonnee(String message, int max) {
         Scanner scanner = new Scanner(System.in);
         int coordonnee;

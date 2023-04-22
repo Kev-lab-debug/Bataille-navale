@@ -3,11 +3,13 @@ package bataille;
 import java.util.ArrayList;
 
 public class Bateau {
-    private String nom;
-    private int taille;
-    private ArrayList<int[]> cases;
-    private boolean estCoule;
+    // Attributs
+    private String nom; // Le nom du bateau
+    private int taille; // La taille du bateau
+    private ArrayList<int[]> cases; // Les cases occupées par le bateau
+    private boolean estCoule; // Indique si le bateau est coulé ou non
 
+    // Constructeur
     public Bateau(String nom, int taille) {
         this.nom = nom;
         this.taille = taille;
@@ -15,6 +17,7 @@ public class Bateau {
         this.estCoule = false;
     }
 
+    // Getters et Setters
     public String getNom() {
         return nom;
     }
@@ -47,11 +50,14 @@ public class Bateau {
         this.estCoule = estCoule;
     }
 
+    // Méthodes
+    // Ajoute une case occupée par le bateau
     public void ajouterCase(int ligne, int colonne) {
         int[] caseBateau = { ligne, colonne };
         cases.add(caseBateau);
     }
 
+    // Vérifie si une case est occupée par le bateau
     public boolean contientCase(int ligne, int colonne) {
         for (int[] caseBateau : cases) {
             if (caseBateau[0] == ligne && caseBateau[1] == colonne) {
@@ -61,6 +67,7 @@ public class Bateau {
         return false;
     }
 
+    // Marque le bateau comme touché et vérifie s'il est coulé
     public void toucher() {
         for (int[] caseBateau : cases) {
             if (!estCoule && caseBateau[0] != -1 && caseBateau[1] != -1) {
